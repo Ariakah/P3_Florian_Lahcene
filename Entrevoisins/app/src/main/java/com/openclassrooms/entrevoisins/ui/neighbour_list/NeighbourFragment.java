@@ -100,12 +100,7 @@ public class NeighbourFragment extends Fragment implements Listener, Serializabl
     @Override
     public void onItemClick(Neighbour item) {
         Intent i = new Intent(getActivity(), ProfilNeighbourActivity.class);
-        i.putExtra("avatar", item.getAvatarUrl());
-        i.putExtra("name", item.getName());
-        i.putExtra("city", item.getAddress());
-        i.putExtra("phone", item.getPhoneNumber());
-        i.putExtra("about", item.getAboutMe());
-        i.putExtra("fbUrl", item.getFbUrl());
-        startActivity(i);
+        i.putExtra("neighbour", item);
+        startActivityForResult(i, getTargetRequestCode());
     }
 }

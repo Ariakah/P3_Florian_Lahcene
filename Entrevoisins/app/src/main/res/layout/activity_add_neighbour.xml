@@ -99,11 +99,9 @@
                 android:id="@+id/fbUrl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="4"
-                android:minLines="4"
                 android:ems="10"
-                android:hint="About me"
-                android:inputType="textMultiLine" />
+                android:hint="Facebook"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.button.MaterialButton
