@@ -77,8 +77,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
-        @BindView(R.id.floatingActionButton)
-        public FloatingActionButton mFloatingActionButton;
 
         public ViewHolder(View view) {
             super(view);

@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import java.io.Serializable;
@@ -19,11 +21,11 @@ import java.io.Serializable;
 public class ProfilNeighbourActivity extends AppCompatActivity implements Serializable {
 
     private ImageView mAvatar;
-    private TextView mName1, mName2, mCity, mPhone, mAbout, mFbUrl;
+    private TextView mName1, mName2, mCity, mPhone, mAbout, mFbUrl, mId;
     private FloatingActionButton mFloatingActionButton;
 
     private NeighbourApiService mApiService;
-    private String mNeighbourImage;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,9 @@ public class ProfilNeighbourActivity extends AppCompatActivity implements Serial
             @Override
             public void onClick(View v) {
                 neighbour.setFavorite(true);
-                mApiService.favoriteNeighbour(neighbour);
+                mApiService.createFavoriteNeighbour(neighbour);
+
+
             }
         });
     }

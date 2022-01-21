@@ -1,12 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import static android.app.Activity.RESULT_OK;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,38 +12,85 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.callback.Listener;
+import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
-import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
-public class FavoriteFragment extends Fragment {
+public class FavoriteFragment extends Fragment implements Listener {
 
-    private RecyclerView mRecyclerView;
-    private List<Neighbour> mNeighbourList = new ArrayList<>();
     private NeighbourApiService mApiService;
+    private RecyclerView mRecyclerView;
 
+
+    /**
+     * Create and return a new instance
+     * @return @{@link NeighbourFragment}
+     */
     public static FavoriteFragment newInstance() {
-        return (new FavoriteFragment());
+        FavoriteFragment fragment = new FavoriteFragment();
+        return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mApiService = DI.getNeighbourApiService();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-
-        mRecyclerView = view.findViewById(R.id.favorite_neighbours);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setHasFixedSize(true);
-
+        Context context = view.getContext();
+        mRecyclerView = (RecyclerView) view;
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
 
+    /**
+     * Init the List of neighbours
+     */
     private void initList() {
-        mApiService.getNeighbours();
+        List<Neighbour> favoriteNeighbours = mApiService.getFavorites();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(favoriteNeighbours, this));
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onDeleteNeighbour(DeleteNeighbourEvent event) {
+        mApiService.deleteNeighbour(event.neighbour);
+        initList();
+    }
+
+    @Override
+    public void onItemClick(Neighbour item) {
+        Intent i = new Intent(getActivity(), ProfilNeighbourActivity.class);
+        i.putExtra("neighbour", item);
+        startActivityForResult(i, getTargetRequestCode());
     }
 }
