@@ -17,6 +17,8 @@ import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfilNeighbourActivity extends AppCompatActivity implements Serializable {
 
@@ -25,7 +27,6 @@ public class ProfilNeighbourActivity extends AppCompatActivity implements Serial
     private FloatingActionButton mFloatingActionButton;
 
     private NeighbourApiService mApiService;
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class ProfilNeighbourActivity extends AppCompatActivity implements Serial
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home : {
+            case android.R.id.home: {
                 finish();
                 return true;
             }
@@ -61,7 +62,7 @@ public class ProfilNeighbourActivity extends AppCompatActivity implements Serial
 
     private void getIncomingIntent() {
 
-        if(getIntent().hasExtra("neighbour") ){
+        if (getIntent().hasExtra("neighbour")) {
             Neighbour intentNeighbour = (Neighbour) getIntent().getSerializableExtra("neighbour");
             displayData(intentNeighbour);
         }
@@ -76,13 +77,24 @@ public class ProfilNeighbourActivity extends AppCompatActivity implements Serial
         mFbUrl.setText(neighbour.getFbUrl() + neighbour.getName());
         mAbout.setText(neighbour.getAboutMe());
 
+        if (neighbour.isFavorite()) {
+            mFloatingActionButton.setImageResource(android.R.drawable.btn_star_big_on);
+        }
+        else {
+            mFloatingActionButton.setImageResource(R.drawable.ic_baseline_star_24);
+        }
+
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                neighbour.setFavorite(true);
+                if (!neighbour.isFavorite()) {
+                    mFloatingActionButton.setImageResource(android.R.drawable.btn_star_big_on);
+                } else {
+                    mFloatingActionButton.setImageResource(R.drawable.ic_baseline_star_24);
+                }
+
+                neighbour.setFavorite(!neighbour.isFavorite());
                 mApiService.createFavoriteNeighbour(neighbour);
-
-
             }
         });
     }

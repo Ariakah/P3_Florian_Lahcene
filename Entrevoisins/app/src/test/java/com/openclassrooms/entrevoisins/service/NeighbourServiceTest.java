@@ -1,18 +1,20 @@
 package com.openclassrooms.entrevoisins.service;
 
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import java.util.List;
 
 /**
  * Unit test on Neighbour service
@@ -22,12 +24,12 @@ public class NeighbourServiceTest {
 
     private NeighbourApiService service;
 
-    @BeforeEach
+    @Before
     public void setup() {
-        service = DI.getNewInstanceApiService();
+        service = DI.getNeighbourApiService();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void getNeighboursWithSuccess() {
         List<Neighbour> neighbours = service.getNeighbours();
         List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
@@ -39,5 +41,11 @@ public class NeighbourServiceTest {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
         service.deleteNeighbour(neighbourToDelete);
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
+    }
+
+    @Test
+    public void favoriteNeighbourWithSuccess(Neighbour neighbour) {
+        service.createFavoriteNeighbour(service.getNeighbours().get(0));
+        assertFalse(service.getNeighbours().get(0).isFavorite());
     }
 }

@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="@id/profil_neighbour_image"
         app:layout_constraintTop_toBottomOf="@id/profil_neighbour_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:srcCompat="@drawable/ic_baseline_star_24" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/profil_neighbour_cardview1"
