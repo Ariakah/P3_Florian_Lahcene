@@ -33,7 +33,7 @@ public class NeighbourServiceTest {
     public void getNeighboursWithSuccess() {
         List<Neighbour> neighbours = service.getNeighbours();
         List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
-        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
+        org.hamcrest.MatcherAssert.assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void favoriteNeighbourWithSuccess(Neighbour neighbour) {
+    public void favoriteNeighbourWithSuccess() {
         service.createFavoriteNeighbour(service.getNeighbours().get(0));
         assertFalse(service.getNeighbours().get(0).isFavorite());
     }
