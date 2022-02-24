@@ -23,7 +23,7 @@ import java.util.List;
 public class ProfilNeighbourActivity extends AppCompatActivity implements Serializable {
 
     private ImageView mAvatar;
-    private TextView mName1, mName2, mCity, mPhone, mAbout, mFbUrl, mId;
+    private TextView mName1, mName2, mCity, mPhone, mAbout, mFbUrl;
     private FloatingActionButton mFloatingActionButton;
 
     private NeighbourApiService mApiService;

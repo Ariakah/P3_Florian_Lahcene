@@ -16,7 +16,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/ic_star_border_white_24dp.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/ic_star_white_24dp.xml" value="0.13645833333333332" />
-        <entry key="app/src/main/res/layout/activity_add_neighbour.xml" value="0.1203125" />
+        <entry key="app/src/main/res/layout/activity_add_neighbour.xml" value="0.25756072998046875" />
         <entry key="app/src/main/res/layout/activity_list_neighbour.xml" value="0.14447463768115942" />
         <entry key="app/src/main/res/layout/activity_profil_neighbour.xml" value="0.25" />
         <entry key="app/src/main/res/layout/favorite_neighbour_fragment.xml" value="0.13179347826086957" />

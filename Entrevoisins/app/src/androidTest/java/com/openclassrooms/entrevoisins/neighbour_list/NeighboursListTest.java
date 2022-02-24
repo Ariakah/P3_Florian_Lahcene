@@ -109,7 +109,7 @@ public class NeighboursListTest {
                 .perform(ViewActions.click());
         //Press Back
         pressBack();
-        //Swipe on favorite neighbour
+        //Swipe on favorite neighbour tab
         onView(ViewMatchers.withId(R.id.container))
                 .perform(ViewActions.swipeLeft());
         //Check on favorite list
